@@ -20,10 +20,7 @@ The Kiln is a cutting-edge, decentralized NFT minting platform built specificall
 
 ## 🎥 Demo Video
 
-<video width="600" controls>
-  <source src="https://ivory-electronic-mollusk-196.mypinata.cloud/ipfs/QmXkXArYUrqXVeFX4Ydp38a8JxYD5DnYxizv7RrPJPgCQ8" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[Watch the demo video](https://gateway.pinata.cloud/ipfs/QmXkXArYUrqXVeFX4Ydp38a8JxYD5DnYxizv7RrPJPgCQ8)
 
 
 ## 🛠️ Getting Started
