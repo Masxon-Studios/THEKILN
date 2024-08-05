@@ -61,7 +61,7 @@ Start the development server:
 bash
 npm start
 
-Open your browser and navigate to http://localhost:3000.
+Open your browser and navigate to http://localhost:8551.
 Connect your wallet (Kaikas or MetaMask).
 Upload your NFT image and enter metadata.
 Click "Mint NFT" to create your unique token on Klaytn.
