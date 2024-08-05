@@ -18,6 +18,14 @@ The Kiln is a cutting-edge, decentralized NFT minting platform built specificall
 - **📊 Supply Management**: Set and manage the maximum supply for your NFT collections.
 - **🌐 IPFS Integration**: Reliable, decentralized storage for NFT metadata and assets via Pinata.
 
+## 🎥 Demo Video
+
+<video width="600" controls>
+  <source src="https://gateway.pinata.cloud/ipfs/QmXkXArYUrqXVeFX4Ydp38a8JxYD5DnYxizv7RrPJPgCQ8" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+
 ## 🛠️ Getting Started
 
 ### Prerequisites
