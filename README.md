@@ -32,7 +32,7 @@ Clone the Repository:
 
 bash
 Copy code
-git clone https://github.com/yourusername/the-kiln.git
+git clone [https://github.com/Masxon-Studios/THEKILN.git]
 cd the-kiln
 Install Dependencies:
 
