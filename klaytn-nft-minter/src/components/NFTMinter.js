@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { formatUnits } from 'ethers';
 import Caver from 'caver-js';
 import contract from '../contractConfig';
 import { Alert, Button, Form, Spinner } from 'react-bootstrap';
@@ -9,6 +10,7 @@ const EXPECTED_NETWORK_ID = 1001; // Baobab testnet
 
 function NFTMinter({ account }) {
   const [file, setFile] = useState(null);
+  const [filePreview, setFilePreview] = useState(null); // State for image preview
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [minting, setMinting] = useState(false);
@@ -20,7 +22,6 @@ function NFTMinter({ account }) {
   useEffect(() => {
     if (typeof window.klaytn !== 'undefined') {
       const caverInstance = new Caver(window.klaytn);
-      console.log('Caver Instance:', caverInstance);
       setCaver(caverInstance);
       checkNetwork(caverInstance);
     } else {
@@ -44,7 +45,9 @@ function NFTMinter({ account }) {
   };
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    setFilePreview(URL.createObjectURL(selectedFile)); // Set image preview
   };
 
   const uploadToPinata = async (file) => {
@@ -102,98 +105,57 @@ function NFTMinter({ account }) {
     }
   };
 
-  const checkBalance = async () => {
-    if (!account || !caver) {
-      setError('Wallet not connected or Caver not initialized');
-      return;
-    }
-  
-    try {
-      // Method 1: Using getBalance
-      const balance1 = await caver.klay.getBalance(account);
-      console.log('Balance (Method 1):', balance1);
-  
-      // Method 2: Using getAccount
-      const accountInfo = await caver.klay.getAccount(account);
-      const balance2 = accountInfo.account.balance;
-      console.log('Balance (Method 2):', balance2);
-  
-      // Use the positive balance (likely the correct one)
-      const rawBalance = balance2 !== '0x0' ? balance2 : balance1;
-      console.log('Selected Raw Balance:', rawBalance);
-  
-      // Convert hex to decimal if necessary
-      const decimalBalance = rawBalance.startsWith('0x') ? parseInt(rawBalance, 16).toString() : rawBalance;
-      console.log('Decimal Balance:', decimalBalance);
-  
-      const balanceInKlay = caver.utils.fromPeb(decimalBalance, 'KLAY');
-      console.log('Balance in KLAY:', balanceInKlay);
-  
-      const formattedBalance = parseFloat(balanceInKlay);
-      console.log('Formatted Balance:', formattedBalance);
-  
-      const balanceBN = caver.utils.toBN(decimalBalance);
-      console.log('Balance as BN:', balanceBN.toString());
-      console.log('Is Balance Negative:', balanceBN.isNeg());
-  
-      setSuccess(`Your balance: ${formattedBalance} KLAY`);
-      return { rawBalance: decimalBalance, balanceInKlay, formattedBalance };
-    } catch (error) {
-      console.error('Error checking balance:', error);
-      setError('Failed to check balance: ' + error.message);
-      throw error;
-    }
-  };
-
   const mintNFT = async () => {
     if (!account) {
       setError('Please connect your wallet first.');
       return;
     }
-  
+
     if (networkError) {
       setError(networkError);
       return;
     }
-  
+
     if (!file || !name || !description) {
       setError('Please fill in all fields and upload an image.');
       return;
     }
-  
-    if (!caver) {
-      setError('Caver is not initialized. Please ensure Kaikas is connected.');
-      return;
-    }
-  
+
     setMinting(true);
     setError('');
     setSuccess('');
-  
+
     try {
       const imageUrl = await uploadToPinata(file);
       const metadataUrl = await createMetadata(imageUrl);
-  
+
       console.log('Attempting to mint NFT with account:', account);
-  
-      const balanceInfo = await checkBalance();
-  
-      if (balanceInfo.formattedBalance < 0.1) {
-        throw new Error(`Insufficient KLAY balance. Current balance: ${balanceInfo.balanceInKlay} KLAY. Please add more KLAY to your wallet.`);
+
+      const balance = await caver.klay.getBalance(account);
+      const formattedBalance = parseFloat(formatUnits(balance, 18));
+
+      console.log('Raw Balance:', balance);
+      console.log('Formatted Balance:', formattedBalance);
+
+      if (formattedBalance < 0.1) {
+        throw new Error('Insufficient KLAY balance. Please add more KLAY to your wallet.');
       }
-  
+
+      const gasEstimate = await contract.methods.mintNFT(account, metadataUrl).estimateGas({ from: account });
       const gasPrice = await caver.klay.getGasPrice();
-      const gas = await contract.methods.mintNFT(account, metadataUrl).estimateGas({ from: account });
-  
+      console.log('Estimated Gas:', gasEstimate);
+      console.log('Current Gas Price:', gasPrice);
+
       const result = await contract.methods.mintNFT(account, metadataUrl).send({
         from: account,
-        gas: gas,
-        gasPrice: gasPrice
+        gas: gasEstimate, // Use the estimated gas
+        gasPrice: gasPrice // Use the current gas price
       });
-  
+
       console.log('Minting result:', result);
       setSuccess('NFT minted successfully!');
       setFile(null);
+      setFilePreview(null); // Clear image preview
       setName('');
       setDescription('');
     } catch (err) {
@@ -212,6 +174,7 @@ function NFTMinter({ account }) {
         <Form.Group>
           <Form.Label>Image</Form.Label>
           <Form.Control type="file" onChange={handleFileChange} />
+          {filePreview && <img src={filePreview} alt="Preview" style={{ marginTop: '10px', maxHeight: '200px' }} />}
         </Form.Group>
         <Form.Group>
           <Form.Label>Name</Form.Label>
@@ -229,13 +192,11 @@ function NFTMinter({ account }) {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Enter NFT description"
+            className="form-textarea"
           />
         </Form.Group>
         <Button onClick={mintNFT} disabled={minting || !account || !file || !name || !description}>
           {minting ? <Spinner animation="border" size="sm" /> : 'Mint NFT'}
-        </Button>
-        <Button onClick={checkBalance} disabled={!account || !caver} className="ml-2">
-          Check Balance
         </Button>
       </Form>
       {error && <Alert variant="danger">{error}</Alert>}

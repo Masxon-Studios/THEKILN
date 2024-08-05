@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import NFTMinter from './components/NFTMinter';
 import WalletConnection from './components/WalletConnection';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css'; // Ensure this imports your enhanced CSS
 
 function App() {
   const [account, setAccount] = useState('');
@@ -14,17 +15,15 @@ function App() {
 
   return (
     <div className="App">
-      <header>
-        <h1>Klaytn NFT Minter</h1>
-      </header>
-      <main>
+      <header className="App-header">
+        <h1>The Kiln: NFT Minter</h1>
         <WalletConnection onAccountChange={handleAccountChange} />
         {account ? (
           <NFTMinter account={account} signer={signer} /> // Pass both account and signer to NFTMinter
         ) : (
           <p>Please connect your wallet to start minting NFTs.</p>
         )}
-      </main>
+      </header>
     </div>
   );
 }
