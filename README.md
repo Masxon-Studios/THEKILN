@@ -7,7 +7,7 @@
 [![React](https://img.shields.io/badge/React-17.0.2-blue)](https://reactjs.org/)
 [![Solidity](https://img.shields.io/badge/Solidity-%5E0.8.0-363636)](https://soliditylang.org/)
 
-The Kiln is a cutting-edge, decentralized NFT minting platform built specifically for the Klaytn blockchain. It empowers creators and collectors to mint, manage, and trade unique digital assets with ease and security.
+The Kiln is a simple, decentralized NFT minting platform built specifically for the Klaytn blockchain. It empowers creators and collectors to mint, any image into an NFT.
 
 ## 🚀 Features
 
