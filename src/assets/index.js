@@ -1,0 +1,1 @@
+export { default as TWLogoBlack } from "./medium.svg"
