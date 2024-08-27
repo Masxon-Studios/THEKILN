@@ -1,6 +1,6 @@
 # The Kiln: Decentralized NFT Minting on Klaytn
 
-![The Kiln Logo](path/to/logo.png)
+![The Kiln Logo](/public/logo192.png)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Klaytn](https://img.shields.io/badge/Klaytn-Compatible-blue)](https://www.klaytn.com/)
