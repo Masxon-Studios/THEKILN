@@ -1,35 +1,48 @@
-# The Kiln: Decentralized NFT Minting on Klaytn
+# Open-Source Web3-React-Redux-Tailwind-Template
 
-![The Kiln Logo](/public/logo192.png)
+This is an Open Source project bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+[TailwindCSS](https://tailwindcss.com/docs) is also installed for quick styling and [Rainbow Toolkit](https://www.rainbowkit.com/) which uses wagmi under the hood is also pre-installed for connections.
+The redux folders are fully empty to allow full customization.
 
-The Kiln is a simple, decentralized NFT minting platform built specifically for the Klaytn blockchain. It empowers creators and collectors to mint any image into an NFT.
 
-🚀 Features
-🔗 Multi-Wallet Integration: Seamless connection with Kaikas and MetaMask wallets.
-🖼️ User-Friendly Minting: Intuitive interface for uploading media and minting NFTs.
-⛽ Real-Time Gas Estimation: Accurate gas fee predictions before minting.
-🌐 IPFS Integration: Reliable, decentralized storage for NFT metadata and assets via Pinata.
-🎥 Demo Video
-Watch the demo video
+## Why use this Template
+I created this template because everytime I needed to create a web3-react project, i hated doing all of this and it was a pain-in-the-ass. This template will help eliminate the stress involved in doing so and eliminate popular mistakes people make when creating a template.
 
-🛠️ Getting Started
-Prerequisites
-Node.js (v14 or higher)
-npm (v6 or higher)
-Git
-MetaMask or Kaikas wallet browser extension
-Installation
-Clone the repository:
-[https://github.com/Masxon-Studios/THEKILN.git]
-cd THEKILN
-Install dependencies: bash npm install
+Contributions are highly welcomed, send a detailed pull request to the repo and I'll check it out.
+Created by [FrankUdoags](https://github.com/frankudoags)
 
-Set up environment variables: Create a .env file in the root directory with the following: text REACT_APP_PINATA_API_KEY=your_pinata_api_key REACT_APP_PINATA_SECRET_API_KEY=your_pinata_secret_key REACT_APP_PINATA_GATEWAY=https://your_custom_gateway.pinata.cloud REACT_APP_KLAYTN_NODE_URL=https://api.baobab.klaytn.net:8651
 
-Update contract address: In src/contractConfig.js, set your deployed contract address: javascript const contractAddress = '0xYourContractAddress';
+## Usage
+Clone this repository then install the dependencies: 
 
-🖥️ Usage Start the development server: bash npm start
+```npm i```
 
-Open your browser and navigate to http://localhost:3000. Connect your wallet (Kaikas or MetaMask). Upload your NFT image and enter metadata. Click "Mint NFT" to create your unique token on Klaytn. 📄 License This project is licensed under the MIT License - see the LICENSE file for details. 🙏 Acknowledgments Klaytn - For providing the blockchain platform and tools Pinata - For IPFS file storage solutions Hardhat - For the robust development environment React - For powering our front-end
+This will install all the dependencies
 
-Masxon Studios Project Link: https://github.com/Masxon-Studios/klaytn-nft-minter.git
+Also create a .env file in the root folder where your package.json file is and add the following line: 
+`GENERATE_SOURCEMAP=false`
+
+
+This helps avoid a lot of terminal errors that can be annoying.
+
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `npm start`
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+

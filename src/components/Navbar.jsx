@@ -24,6 +24,18 @@ export default function Navbar() {
                         <Link to="/mint" className="text-base font-medium text-gray-500 hover:text-gray-900">
                             Mint
                         </Link>
+                        <Link to="/profile" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                            Profile
+                        </Link>
+                        <Link to="/docs" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                            Docs
+                        </Link>
+                        <Link to="/tutorial" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                            Tutorial
+                        </Link>
+                        <Link to="/contact" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                            Contact
+                        </Link>
                     </Popover.Group>
                     <div className='flex gap-x-2 items-center'>
                         <ConnectButton />
@@ -73,6 +85,18 @@ export default function Navbar() {
                             <div className="grid grid-cols-2 gap-y-4 gap-x-8">
                                 <Link to="/mint" className="text-base font-medium text-gray-900 hover:text-gray-700">
                                     Mint
+                                </Link>
+                                <Link to="/profile" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                                    Profile
+                                </Link>
+                                <Link to="/docs" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                                    Docs
+                                </Link>
+                                <Link to="/tutorial" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                                    Tutorial
+                                </Link>
+                                <Link to="/contact" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                                    Contact
                                 </Link>
                             </div>
                         </div>

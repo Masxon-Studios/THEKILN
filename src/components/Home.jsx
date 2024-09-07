@@ -45,9 +45,23 @@ const Home = () => {
                 >
                     Mint
                 </Link>
+                <Link
+                    to='/profile'
+                    className='inline-flex items-center justify-center w-full sm:w-fit px-10 py-3 border border-transparent text-base font-medium rounded-md text-slate-700 bg-slate-200 hover:bg-slate-300'
+                >
+                    Profile
+                </Link>   
             </div>
-
-
+            
+            {/* Install App button */}
+            <div className='mt-8 w-full flex justify-center px-4'>
+                <button
+                    onClick={handleInstallClick}
+                    className='inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-900 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-700'
+                >
+                    Install The Kiln App
+                </button>
+            </div>
             </div>
     );
 }
