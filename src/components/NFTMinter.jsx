@@ -167,14 +167,6 @@ function NFTMinter() {
     <div className="flex flex-col justify-center items-center min-h-[90vh] w-full lg:-mt-10 bg-white rounded-lg shadow-md p-8">
       <h2 className="text-4xl font-bold text-slate-800 mb-6 text-center">Mint Your NFT</h2>
       <form className="w-full max-w-md">
-        <div className="bg-blue-100 text-center p-4 rounded-md mb-4">
-          <h3 className='text-lg font-medium text-blue-700'>
-            Limited-Time Offer!
-          </h3>
-          <p className='text-blue-600'>
-            For every Klay you spend minting your NFT, we’ll airdrop the equivalent amount in MXN tokens. This offer is valid until we reach our goal of $15,000 USD and get listed on a DEX.
-          </p>
-        </div>
         <div className="mb-6">
           <label className="block text-slate-700 text-lg font-medium mb-2">Image</label>
           <input
