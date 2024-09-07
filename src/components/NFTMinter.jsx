@@ -14,7 +14,8 @@ function NFTMinter() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [metadataUrl, setMetadataUrl] = useState('');
-  const [imagePreview, setImagePreview] = useState('');
+  const [mintingFee, setMintingFee] = useState('0');
+  const [imagePreview, setImagePreview] = useState(''); // State for image preview
 
   const { address } = useAccount();
 
@@ -34,15 +35,33 @@ function NFTMinter() {
 
   const [signer, setSigner] = useState(null);
 
-  const contract = signer ? new ethers.Contract('0x5FbDB2315678afecb367f032d93F642f64180aa3', contractABI, signer) : null;
+  const contract = signer ? new ethers.Contract('0x180B901B778ec228570596107023beb5501eD334', contractABI, signer) : null;
+
+  const fetchMintingFee = async () => {
+    try {
+      if (contract) {
+        const fee = await contract.klayFee();
+        setMintingFee(fee.toString());
+      }
+    } catch (error) {
+      console.error('Error retrieving minting fee:', error);
+      setError('Could not retrieve minting fee');
+    }
+  };
+
+  useEffect(() => {
+    if (address && signer) {
+      fetchMintingFee();
+    }
+  }, [address, signer]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setFile(file);
     if (file) {
-      setImagePreview(URL.createObjectURL(file));
+      setImagePreview(URL.createObjectURL(file)); // Generate and set image preview URL
     } else {
-      setImagePreview('');
+      setImagePreview(''); // Clear preview if no file is selected
     }
   };
 
@@ -104,30 +123,35 @@ function NFTMinter() {
       setError('Please connect your wallet first.');
       return;
     }
-
+  
     if (!file || !name || !description) {
       setError('Please fill in all fields and upload an image.');
       return;
     }
-
+  
     setMinting(true);
     setError('');
     setSuccess('');
-
+  
     try {
       const imageUrl = await uploadToPinata(file);
       const metadataUrl = await createMetadata(imageUrl);
       setMetadataUrl(metadataUrl);
-
+  
       if (contract) {
-        const tx = await contract.mintNFT(address, metadataUrl); // No value sent, as it's a free mint
+        const tx = await contract.mintNFT(address, metadataUrl, {
+          value: mintingFee,
+          gasLimit: 300000,
+          gasPrice: ethers.utils.parseUnits('250', 'gwei'),
+        });
+  
         await tx.wait();
-
+  
         setSuccess('NFT minted successfully!');
         setFile(null);
         setName('');
         setDescription('');
-        setImagePreview('');
+        setImagePreview(''); // Clear the image preview after minting
       } else {
         setError('Contract not initialized properly');
       }
@@ -138,7 +162,7 @@ function NFTMinter() {
       setMinting(false);
     }
   };
-
+ 
   return (
     <div className="flex flex-col justify-center items-center min-h-[90vh] w-full lg:-mt-10 bg-white rounded-lg shadow-md p-8">
       <h2 className="text-4xl font-bold text-slate-800 mb-6 text-center">Mint Your NFT</h2>
